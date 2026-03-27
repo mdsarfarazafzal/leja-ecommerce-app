@@ -1,0 +1,56 @@
+name: Leja Pipeline
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+concurrency:
+    group: ${{github.workflow}}-${{github.ref}}
+    cancel-in-progress: true
+
+jobs:
+    build:
+        name: Building
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v6
+            - name: Setup Node.js
+              uses: actions/setup-node@v6
+              with:
+                    node-version: '22'
+                    cache: 'npm'
+            - name: Intall Dependencies
+              run: npm ci
+            # Can perform tests here
+            - name: Build App
+              run: npm run build
+              env:
+                VITE_EMAILJS_PUBLIC_KEY: ${{secrets.VITE_EMAILJS_PUBLIC_KEY}}
+                VITE_TEMPLATE_KEY: ${{secrets.VITE_TEMPLATE_KEY}}
+                VITE_SERVICE_KEY: ${{secrets.VITE_SERVICE_KEY}}
+            - name: Upload build files
+              uses: actions/upload-artifact@v4
+              with:
+                    name: build-files
+                    path: ./dist
+    deploy:
+        name: Deploying App
+        needs: build
+        runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        steps:
+            - name: Download build files
+              uses: actions/download-artifact@v8
+              with:
+                    name: build-files
+                    path: ./dist
+            - name: Deploy to github pages
+              uses: peaceiris/actions-gh-pages@v4
+              with:
+                    github_token: ${{secrets.GITHUB_TOKEN}}
+                    publish_dir: ./dist
