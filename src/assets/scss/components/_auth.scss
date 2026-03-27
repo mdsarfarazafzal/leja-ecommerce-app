@@ -1,0 +1,62 @@
+@use '../abstracts/' as *;
+
+.auth {
+  @include flex(row, center, center);
+  min-height: calc(100vh - 100px);
+  &__form-container {
+    width: 200px;
+    border: $border-light;
+    padding: 50px;
+    @include flex(column, center, center, 30px);
+    border-radius: $radius-lg;
+    box-shadow: $my-shadow;
+    &__heading {
+      @include heading-text;
+      color: $color-gray-800;
+      @include flex(column, center, center, 5px);
+      &__label {
+        @include label-text;
+        color: $color-gray-500;
+      }
+    }
+    &__form {
+      @include flex(column, flex-start, center, 20px);
+      width: 100%;
+      &__fields {
+        @include flex(column, flex-start, center, 5px);
+        width: 100%;
+
+        &__label {
+          @include body-text;
+          color: $color-gray-800;
+        }
+        &__input {
+          border-bottom: $border-light;
+          border-top: none;
+          border-left: none;
+          border-right: none;
+          outline: none;
+          width: 100%;
+          @include body-text;
+        }
+        &__input:focus {
+          border-bottom: $border-dark;
+          border-top: none;
+          border-left: none;
+          border-right: none;
+          outline: none;
+        }
+      }
+      &__actions {
+        @include flex(column, center, center, 15px);
+        width: 100%;
+        &__link {
+          color: $color-gray-500;
+          &:hover {
+            color: $color-gray-800;
+          }
+        }
+      }
+    }
+  }
+}
