@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
-    "format": "prettier --write --experimental-cli src/"
+    "format": "prettier --write --experimental-cli src/",
+    "test": "jest"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -22,12 +23,21 @@
     "vue-router": "^5.0.3"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.29.2",
+    "@babel/preset-typescript": "^7.28.5",
     "@tsconfig/node24": "^24.0.4",
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.11.0",
     "@vitejs/plugin-vue": "^6.0.4",
+    "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.8.1",
+    "@vue/vue3-jest": "^29.2.6",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "npm-run-all2": "^8.0.4",
     "prettier": "3.8.1",
+    "ts-jest": "^29.4.9",
     "typescript": "~5.9.3",
     "vite": "^7.3.1",
     "vite-plugin-vue-devtools": "^8.0.6",
